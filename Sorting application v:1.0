@@ -21,34 +21,39 @@ txt.place(x = 255,y = 51)
 
 def merge_sort(arr):
     start = timeit.default_timer()
-    s_arr = []
-    if len(arr) > 1:
-        middle = len(arr)//2
-        left = arr[:middle]
-        right = arr[middle:]
-        
-        left = merge_sort(left)
-        right = merge_sort(right)
-        
-        x = y = 0
-        
-        while x < len(left) and y < len(right):
-            if left[x] < right[y]:
+    def m_s(arr):
+        s_arr = []
+        if len(arr) > 1:
+            middle = len(arr)//2
+            left = arr[:middle]
+            right = arr[middle:]
+            
+            left = m_s(left)
+            right = m_s(right)
+            
+            x = y = 0
+            
+            while x < len(left) and y < len(right):
+                if left[x] < right[y]:
+                    s_arr.append(left[x])
+                    x +=1
+                else:
+                    s_arr.append(right[y])
+                    y +=1
+            while x < len(left):
                 s_arr.append(left[x])
-                x +=1
-            else:
+                x+=1
+            while y < len(right):
                 s_arr.append(right[y])
-                y +=1
-        while x < len(left):
-            s_arr.append(left[x])
-            x+=1
-        while y < len(right):
-            s_arr.append(right[y])
-            y+=1
-        return s_arr
-    else:
-        return arr
+                y+=1
+            
+            return s_arr
+        else:
+            return arr
     stop = timeit.default_timer()
+    res = m_s(arr)
+    return "The sorted array is " + str(res)+" \n"+"Time taken by merge sort:"+str((stop-start))
+    
     
 def selection_sort(arr):
     start = timeit.default_timer()
@@ -58,8 +63,9 @@ def selection_sort(arr):
             if arr[index] > arr[i]:
                 arr[index],arr[i] = arr[i],arr[index]
             index += 1
-    return arr
     stop = timeit.default_timer()
+    return "The sorted array is " + str(arr)+" \n"+"Time taken by selection sort :"+str((stop-start))
+    
     
 def insertion_sort(arr):
     start = timeit.default_timer()
@@ -71,8 +77,9 @@ def insertion_sort(arr):
             b -= 1
             print("")
         arr[b+1] = a
-    return arr
     stop = timeit.default_timer()
+    return "The sorted array is " + str(arr)+" \n"+"Time taken by insertion sort:"+str((stop-start))
+    
     
 def bubble_sort(arr):
     start = timeit.default_timer()
@@ -80,27 +87,28 @@ def bubble_sort(arr):
         for j in range(0,len(arr)):
             if arr[j] > arr[i]:
                 arr[i],arr[j] = arr[j],arr[i]
-    return arr
     stop = timeit.default_timer()
+    return "The sorted array is " + str(arr)+" \n"+"Time taken by bubble sort:"+str((stop-start))
+    
     
 def clicked():
     if combo.current() == 0:
         inpt = list(map(int,(txt.get()).rstrip().split()))
         inp = merge_sort(inpt)
-        res = "The sorted array is " + str(inp)+" \n"+"Time taken by merge sort :"+str((stop-start))
+        
     elif combo.current() == 1:
         inpt = list(map(int,(txt.get()).rstrip().split()))
         inp = selection_sort(inpt)
-        res = "The sorted array is " + str(inp)+" \n"+"Time taken by selection sort :"+str((stop-start))
+        
     elif combo.current() == 2:
         inpt = list(map(int,(txt.get()).rstrip().split()))
         inp = insertion_sort(inpt)
-        res = "The sorted array is " + str(inp)+" \n"+"Time taken by insertion sort:"+str((stop-start))
+        
     elif combo.current() == 3:
         inpt = list(map(int,(txt.get()).rstrip().split()))
         inp = bubble_sort(inpt)
-        res = "The sorted array is " + str(inp)+" \n"+"Time taken by bubble sort:"+str((stop-start))
-    messagebox.showinfo("Sorted",res)
+        
+    messagebox.showinfo("Sorted",inp)
     
 window.title("Sorting")
 
